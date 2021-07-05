@@ -1,0 +1,23 @@
+{% extends 'base.html'%}{% block content %}
+
+<h1 style="text-align: center;" id="counter">FACE DETECTION WEB APPS IN FLASK</h1>
+<div style="justify-content: center; display: flex; margin-top: 30px;">
+<img src="{{ url_for('video') }}"></div>
+<script>
+    var eventSource = new EventSource("/listen")
+
+    eventSource.addEventListener("message", function(e) {
+      console.log(e.data)
+    }, false)
+
+    eventSource.addEventListener("online", function(e) {
+      // console.log(e.data.color)
+      data = JSON.parse(e.data)
+      document.querySelector("#counter").innerText = data.counter
+      document.querySelector("body").style.backgroundColor= data.color
+    }, true)
+
+  </script>
+
+
+{% endblock %}
